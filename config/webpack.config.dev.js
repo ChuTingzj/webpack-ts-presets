@@ -1,7 +1,7 @@
-import {merge} from 'webpack-merge'
-import * as webpack from "webpack";
-import {resolve} from "path";
+const {merge} = require('webpack-merge')
 const common = require('./webpack.config.common')
+const webpack = require('webpack')
+const {resolve} = require('path')
 module.exports = merge(common,{
     output: {
         filename: 'js/[name].js',

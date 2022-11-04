@@ -1,11 +1,11 @@
-import  {resolve} from "path";
-import * as CompressionPlugin from 'compression-webpack-plugin'
-import * as CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
-import * as TerserWebpackPlugin from 'terser-webpack-plugin'
-import * as MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import * as CopyWebpackPlugin from 'copy-webpack-plugin'
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 const common = require('./webpack.config.common')
-import {merge} from 'webpack-merge'
+const {merge} = require('webpack-merge')
+const {resolve} = require('path')
 module.exports = merge(common,{
     output: {
         path: resolve(__dirname, '../dist'),

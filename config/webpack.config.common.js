@@ -1,9 +1,8 @@
-import {resolve} from 'path'
-import * as webpack from 'webpack'
-import * as HtmlWebpackPlugin from 'html-webpack-plugin'
-import * as ProgressBarPlugin from 'progress-bar-webpack-plugin'
-import {existsSync} from "fs";
-
+const ProgressBarPlugin  = require('progress-bar-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const {existsSync} = require('fs')
+const {resolve} = require('path')
+const webpack = require('webpack')
 const dotenv = require('dotenv')
 const chalk = require('chalk')
 const envFile = resolve(__dirname, `../.env.${process.env.NODE_ENV}`)
@@ -13,7 +12,7 @@ const result = dotenv.config({
 if (result.error) throw result.error
 module.exports = {
     entry: {
-        app: resolve(__dirname, '../src/index.ts')
+        app: resolve(__dirname, '../src/index.tsx')
     },
     output: {
         publicPath: '/',
@@ -28,15 +27,15 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: resolve(__dirname, './public/index.html'),
+            template: resolve(__dirname, '../public/index.html'),
             inject: 'body',
             filename: 'index.html',
             scriptLoading: 'defer',
             title: 'Chu-Ting'
         }),
-        new ProgressBarPlugin(({
+        new ProgressBarPlugin({
             format: ` build [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`
-        } as any)),
+        } ),
         new webpack.DefinePlugin({
             process: {
                 env: {...result.parsed}

@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "start": "pnpm run serve",
-    "serve": "webpack serve --config ./config/webpack.config.dev.ts",
-    "build": "webpack --config ./config/webpack.config.prod.ts --report"
+    "serve": "webpack serve --config ./config/webpack.config.dev.js",
+    "build": "webpack --config ./config/webpack.config.prod.js --report"
   },
   "author": "ChuTingzj",
   "license": "MIT",
