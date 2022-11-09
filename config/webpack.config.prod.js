@@ -6,6 +6,11 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const common = require('./webpack.config.common')
 const {merge} = require('webpack-merge')
 const {resolve} = require('path')
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 module.exports = merge(common,{
     output: {
         path: resolve(__dirname, '../dist'),
@@ -96,12 +101,52 @@ module.exports = merge(common,{
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+                test: cssRegex,
+                exclude:cssModuleRegex,
+                use: [MiniCssExtractPlugin.loader, {
+                    loader:'css-loader',
+                    options:{
+                        modules:{
+                            model:'icss'
+                        }
+                    }
+                }, 'postcss-loader']
             },
             {
-                test: /\.s[ac]ss$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+                test:cssModuleRegex,
+                use: [MiniCssExtractPlugin.loader, {
+                    loader:'css-loader',
+                    options:{
+                        modules:{
+                            model:'local',
+                            getLocalIdent:getCSSModuleLocalIdent
+                        }
+                    }
+                }, 'postcss-loader']
+            },
+            {
+                test:sassRegex,
+                exclude:sassModuleRegex,
+                use: [MiniCssExtractPlugin.loader, {
+                    loader:'css-loader',
+                    options:{
+                        modules:{
+                            model:'icss'
+                        }
+                    }
+                }, 'postcss-loader', 'sass-loader']
+            },
+            {
+                test:sassModuleRegex,
+                use: [MiniCssExtractPlugin.loader, {
+                    loader:'css-loader',
+                    options:{
+                        modules:{
+                            model:'local',
+                            getLocalIdent:getCSSModuleLocalIdent
+                        }
+                    }
+                }, 'postcss-loader', 'sass-loader']
             },
             {
                 test: /\.(ts|tsx)$/,
